@@ -1,7 +1,5 @@
 SOURCES=$(wildcard *.c)
 PROGRAMS=$(basename $(SOURCES))
-OBJECTS=$(addsuffic .o,$(PROGRAMS))
-LIBSOURCE=tga.c
 LIBRARIES=libtga.a
 
 all:	$(PROGRAMS) $(LIBRARIES)
