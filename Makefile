@@ -5,6 +5,8 @@ LIBRARIES=libtga.a
 all:	$(PROGRAMS) $(LIBRARIES)
 
 %:	%.c
+%.o:	%.c
+	$(CC) $(CFLAGS) -std=c99 -c -o $@ $<
 
 %:	%.o	
 	$(CC) $(CFLAGS) -o $@ $< $(LIBRARIES) -lm

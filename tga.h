@@ -1,5 +1,5 @@
 #ifndef _TGA_H
-    #define _TGA_H
+#define _TGA_H
 #include <stdint.h>   
 #include <stdio.h>
 typedef struct _TgaHeader {
@@ -20,6 +20,28 @@ typedef struct _TgaHeader {
 typedef struct _pixel {
     uint8_t r, g, b, a;
 } PIXEL;
+
+#ifndef _LIB_TGA_
+char *tga_image_type[] = {"No image data included",
+    "Colormapped image data.",
+    "Truecolor image data.",
+    "Monochrome image data.",
+    "","","","","",
+    "Colormapped image data.",
+    "Truecolor image data.",
+    "Monocolor image data."
+};
+
+char *tga_image_encoding[] = {"",
+    "Colormap: yes   Encoding: no",
+    "Colormap: no    Encoding: no",
+    "Colormap: no    Encoding: no",
+    "", "", "", "", "", 
+    "Colormap: yes   Encoding: yes",
+    "Colormap: no    Encoding: yes",
+    "Colormap: no    Encoding: yes"
+};
+#endif
 
 void tga_read_header (FILE *, TGAHEADER *);
 

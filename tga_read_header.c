@@ -15,10 +15,7 @@
  *
  * =====================================================================================
  */
-
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include "tga.h"
 
 
@@ -47,23 +44,23 @@ main (int argc, char **argv) {
     printf ("Image type: %d ", header.datatypecode);
     switch (header.datatypecode) {
         case 0: printf("(No image data included in file.\n");break;
-        case 1: printf("(Colormapped image data.)\n");
-                printf("Colormap: yes   Encoding: no\n");
+        case 1: printf("(%s)\n", tga_image_type[1]);
+                printf("%s\n", tga_image_encoding[1]);
                 break;
-        case 2: printf("(Truecolor image data.)\n");
-                printf("Colormap: no    Encoding: no\n");
+        case 2: printf("(%s)\n", tga_image_type[2]);
+                printf("%s\n", tga_image_encoding[2]);
                 break;
-        case 3: printf("(Monochrome image data.)\n");
-                printf("Colormap: no    Encoding: no\n");
+        case 3: printf("(%s)\n", tga_image_type[3]);
+                printf("%s\n", tga_image_encoding[3]);
                 break;
-        case 9: printf("(Colormapped image data.)\n");
-                printf("Colormap: yes   Encoding: yes\n");
+        case 9: printf("(%s)\n", tga_image_type[9]);
+                printf("%s\n", tga_image_encoding[9]);
                 break;
-        case 10: printf("(Truecolor image data.)\n");
-                 printf("Colormap: no   Encoding: yes\n");
+        case 10: printf("(%s)\n", tga_image_type[10]);
+                 printf("%s\n", tga_image_encoding[10]);
                  break;
-        case 11: printf("(Monochrome image data.)\n");
-                 printf("Colormap: no   Encoding: yes\n");
+        case 11: printf("(%s)\n", tga_image_type[11]);
+                 printf("%s\n", tga_image_encoding[11]);
                  break;
         default:
                  printf("Unsupported image file.\n");
@@ -82,6 +79,7 @@ main (int argc, char **argv) {
     printf ("Descriptor: %d\n", header.imagedescriptor);
 
     fclose (fptr);
+    return 0;
 }
 
 

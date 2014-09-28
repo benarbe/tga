@@ -15,8 +15,9 @@
  *
  * =====================================================================================
  */
-
+#define _LIB_TGA_
 #include "tga.h"
+
 
 void
 tga_read_header(FILE *fptr, TGAHEADER *header) {
