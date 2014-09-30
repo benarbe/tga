@@ -93,11 +93,31 @@ main (int argc, char **argv) {
             MergeBytes(&(pixels[n]), p, bytes2read);
             n++;
     
-        } else {
-            fprintf (stderr, "Under construction\n");
-            exit (0);
-        }
-    }
+        } else if (header.datatypecode == 10) { /* Compressed */
+            if (fread (p, 1, bytes2read+1, fptr) != bytes2read+1) {
+                fprintf (stderr, "Unexpected end of file at pixel %d\n", n);
+                exit (-1);
+            }
+            int j = p[0] & 0x7f;
+            MergeBytes (&(pixels[n]),&(p[1]), bytes2read);
+            n++;
+            if (p[0] & 0x80) {  /*  RLE chunk */
+                for (int i=0; i<j;i++) {
+                    MergeBytes (&(pixels[n]), &(p[1]), bytes2read);
+                    n++;
+                }
+            } else {        /* Normal chunck */
+                for (int i=0; i<j;i++) {
+                    if (fread(p,1,bytes2read,fptr) != bytes2read) {
+                        fprintf (stderr, "Unexpected end of file at pixel %d\n", n);
+                        exit (-1);
+                    }
+                    MergeBytes (&(pixels[n]), p, bytes2read);
+                    n++;
+                }
+            }
+        } 
+    } /*  end of while */
 
     fclose (fptr);
 
@@ -119,7 +139,7 @@ main (int argc, char **argv) {
     putc ((header.height & 0x00FF), fptr);
     putc ((header.height & 0xFF00) / 256, fptr);
     putc (24, fptr);    /*  24 bit bitmap */
-    putc (0, fptr);
+    putc (header.imagedescriptor, fptr);
     for (int i=0; i<header.height*header.width; i++) {
         putc (pixels[i].b, fptr);
         putc (pixels[i].g, fptr);
